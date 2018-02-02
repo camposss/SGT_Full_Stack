@@ -13,14 +13,17 @@ class StudentTable extends Component{
     render(){
 
         const studentList = this.props.students.map((item,index)=>{
-            return(
-                <tr key={index}>
-                    <td>{item.name}</td>
-                    <td>{item.course}</td>
-                    <td>{item.grade}</td>
-                    <td><button className='btn btn-danger'>Delete</button></td>
-                </tr>
-            )
+            if(index<=25){
+                return(
+                    <tr key={index}>
+                        <td>{item.name}</td>
+                        <td>{item.course}</td>
+                        <td>{item.grade}</td>
+                        <td><button className='btn btn-danger'>Delete</button></td>
+                    </tr>
+                )
+            }
+
         });
         return(
             <tbody>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {fetchStudentData} from "../actions/";
+// import {connect} from 'react-redux';
+// import {fetchStudentData} from "../actions/";
 import StudentTable from './student_table';
 
 class StudentGradeLayout extends Component{
@@ -81,10 +81,12 @@ class StudentGradeLayout extends Component{
     }
 
 }
-function mapStateToProps(state){
-    return{
-        students: state.studentData
-    }
-}
+// function mapStateToProps(state){
+//     return{
+//         students: state.studentData
+//     }
+// }
+//
+// export default connect(mapStateToProps,{fetchStudentData})(StudentGradeLayout);
 
-export default connect(mapStateToProps,{fetchStudentData})(StudentGradeLayout);
+export default StudentGradeLayout;
