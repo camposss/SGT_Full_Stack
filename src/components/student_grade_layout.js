@@ -1,7 +1,15 @@
 import React, {Component} from 'react';
-
+import {connect} from 'react-redux';
+import {fetchStudentData} from "../actions/";
+import StudentTable from './student_table';
 
 class StudentGradeLayout extends Component{
+
+    // componentDidMount() {
+    //     this.props.fetchStudentData().then(()=>{
+    //         console.log('these are the props in student grade layout comp ', this.props.students);
+    //     })
+    // }
     render(){
         return(
         <div className="container">
@@ -49,8 +57,7 @@ class StudentGradeLayout extends Component{
                         <th>Operations</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <StudentTable/>
                 </table>
             </div>
             {/*<div id="failureModal" className="modal fade" role="dialog">*/}
@@ -74,5 +81,10 @@ class StudentGradeLayout extends Component{
     }
 
 }
+function mapStateToProps(state){
+    return{
+        students: state.studentData
+    }
+}
 
-export default StudentGradeLayout;
+export default connect(mapStateToProps,{fetchStudentData})(StudentGradeLayout);
