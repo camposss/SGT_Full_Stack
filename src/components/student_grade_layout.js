@@ -35,9 +35,9 @@ class StudentGradeLayout extends Component{
                     <input type="text" className="form-control" name="studentGrade" id="studentGrade"
                            placeholder="Student Grade"/>
                 </div>
-                <button type="button" className="btn btn-success add_button" onClick="">Add</button>
-                <button type="button" className="btn btn-default cancel_button" onClick="">Cancel</button>
-                <button type="button" className="btn btn-info data_server_button" onClick="">Get Data From Server</button>
+                <button type="button" className="btn btn-success" onClick="">Add</button>
+                <button type="button" className="btn btn-default" onClick="">Cancel</button>
+                <button type="button" className="btn btn-info" onClick="">Get Data From Server</button>
             </div>
             <div className="student-list-container col-md-8">
                 <table className="table student-list pull-left">
@@ -53,22 +53,22 @@ class StudentGradeLayout extends Component{
                     </tbody>
                 </table>
             </div>
-            <div id="failureModal" className="modal fade" role="dialog">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal">&times;</button>
-                            <h4 className="modal-title">Error!!!</h4>
-                        </div>
-                        <div className="modal-body">
-                            <p className="modal_text">Some text in the modal.</p>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/*<div id="failureModal" className="modal fade" role="dialog">*/}
+                {/*<div className="modal-dialog">*/}
+                    {/*<div className="modal-content">*/}
+                        {/*<div className="modal-header">*/}
+                            {/*<button type="button" className="close" data-dismiss="modal">&times;</button>*/}
+                            {/*<h4 className="modal-title">Error!!!</h4>*/}
+                        {/*</div>*/}
+                        {/*<div className="modal-body">*/}
+                            {/*<p className="modal_text">Some text in the modal.</p>*/}
+                        {/*</div>*/}
+                        {/*<div className="modal-footer">*/}
+                            {/*<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
+            {/*</div>*/}
         </div>
         )
     }
