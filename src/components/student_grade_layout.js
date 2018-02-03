@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-// import {connect} from 'react-redux';
-// import {fetchStudentData} from "../actions/";
+import {connect} from 'react-redux';
+import {fetchStudentData} from "../actions/";
 import StudentTable from './student_table';
+import {addStudent} from "../actions/";
 
 class StudentGradeLayout extends Component{
 
@@ -10,6 +11,12 @@ class StudentGradeLayout extends Component{
     //         console.log('these are the props in student grade layout comp ', this.props.students);
     //     })
     // }
+    handleAddButton(){
+        console.log('we are trying to add something');
+        this.props.addStudent().then(()=>{
+            this.props.fetchStudentData();
+        })
+    }
     render(){
         return(
         <div className="container">
@@ -43,7 +50,7 @@ class StudentGradeLayout extends Component{
                     <input type="text" className="form-control" name="studentGrade" id="studentGrade"
                            placeholder="Student Grade"/>
                 </div>
-                <button type="button" className="btn btn-success" onClick="">Add</button>
+                <button type="button" className="btn btn-success" onClick={()=>this.handleAddButton()}>Add</button>
                 <button type="button" className="btn btn-default" onClick="">Cancel</button>
                 <button type="button" className="btn btn-info" onClick="">Get Data From Server</button>
             </div>
@@ -89,4 +96,4 @@ class StudentGradeLayout extends Component{
 //
 // export default connect(mapStateToProps,{fetchStudentData})(StudentGradeLayout);
 
-export default StudentGradeLayout;
+export default connect(null, {addStudent, fetchStudentData}) (StudentGradeLayout);

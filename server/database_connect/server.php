@@ -65,14 +65,10 @@ switch($_GET['action']) {
 //            }
 
         }
-//    case 'post':
-//        switch ($_GET['resource']) {
-//            case 'record-item':
-//                if (!empty($post)) {
-//                    require('./actions/add_record_item.php');
-//                } else{
-//                    throw new Exception('Must have a post variable when getting resource record-item');
-//                }
+    case 'post':
+        switch ($_GET['resource']) {
+            case 'add-student':
+                require('./actions/add_student.php');
 //                break;
 //            case 'login':
 //                if (!empty($post)) {
@@ -171,7 +167,7 @@ switch($_GET['action']) {
 //                    throw new Exception('Must have a post variable when getting trying to send an email');
 //                }
 //            }
-//        }
+        }
 
 }
 

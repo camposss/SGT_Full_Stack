@@ -11,9 +11,8 @@ class StudentTable extends Component{
         })
     }
     render(){
-
         const studentList = this.props.students.map((item,index)=>{
-            if(index<=25){
+            if(index>195){
                 return(
                     <tr key={index}>
                         <td>{item.name}</td>
@@ -23,7 +22,6 @@ class StudentTable extends Component{
                     </tr>
                 )
             }
-
         });
         return(
             <tbody>

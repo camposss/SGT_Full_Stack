@@ -1,3 +1,4 @@
 export default{
-    STUDENT_DATA: "STUDENT_DATA"
+    STUDENT_DATA: "STUDENT_DATA",
+    ADD_STUDENT: 'ADD_STUDENT'
 }
