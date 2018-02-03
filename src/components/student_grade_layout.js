@@ -26,7 +26,15 @@ class StudentGradeLayout extends Component{
         const {name,course,grade} = this.state.form;
         this.props.addStudent(name,course,grade).then(()=>{
             this.props.fetchStudentData();
-        })
+        }).then(()=>{
+            this.setState({
+                form: {
+                    name: '',
+                    course: '',
+                    grade: ''
+                }
+            })
+        });
     }
     render(){
         const {name,course,grade}= this.state.form;

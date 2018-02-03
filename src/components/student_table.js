@@ -22,16 +22,17 @@ class StudentTable extends Component{
         const studentId= this.props.students[this.state.studentIndex].id;
         console.log('this is the index of what you clicked ', studentId);
         this.props.deleteStudent(studentId).then(()=>{
-            this.props.fetchStudentData().then(()=>{
-                this.setState({
-                    deleteModal: false
-                })
-            });
+            this.setState({
+                deleteModal: false
+            })
+
+        }).then(()=>{
+            this.props.fetchStudentData();
         });
     }
     confirmDeleteModal(){
-        const studentInfo= this.props.students[this.state.studentIndex];
-        console.log('student info ', studentInfo);
+        const studentName= this.props.students[this.state.studentIndex].name;
+        console.log('student info ', studentName);
         return(
             <span>
               <div className='confirm-modal'>
@@ -43,7 +44,7 @@ class StudentTable extends Component{
                         </div>
                     </div>
                       <div className="modal-body">
-                      <p>Are you sure you want to delete : <strong>{studentInfo.name}</strong> from your grade table? </p>
+                      <p>Are you sure you want to delete : <strong>{studentName}</strong> from your grade table? </p>
                           <div className="modal-footer">
                                 <button onClick={()=> this.handleDelete()} className='btn btn-success'>Confirm</button>
                                 <button onClick={()=> this.setState({deleteModal: false})} className='btn btn-danger'>Cancel</button>
