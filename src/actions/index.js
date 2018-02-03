@@ -25,3 +25,16 @@ export function addStudent(name,course,grade) {
         payload: request
     };
 }
+const delete_student_url = "http://localhost/database_connect/server.php?action=post&resource=delete-student";
+export function deleteStudent(studentId) {
+    const request = axios.post(delete_student_url, {
+        studentId: studentId
+
+    });
+
+    console.log('the request in actions? ',request);
+    return {
+        type: types.DELETE_STUDENT,
+        payload: request
+    };
+}

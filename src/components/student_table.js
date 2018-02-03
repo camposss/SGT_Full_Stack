@@ -1,12 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchStudentData} from "../actions/";
+import {fetchStudentData,deleteStudent} from "../actions/";
 
 
 class StudentTable extends Component{
-
+    // constructor(props){
+    //     super(props);
+    //
+    //     this.state= {
+    //     }
+    // }
     componentDidMount() {
-        this.props.fetchStudentData();
+        this.props.fetchStudentData().then(()=>{
+            console.log('these are the props in student table ', this. props);
+        });
+    }
+    handleDelete(index){
+        const studentId= this.props.students[index].id;
+        console.log('this is the index of what you clicked ', studentId);
+        this.props.deleteStudent(studentId).then(()=>{
+            this.props.fetchStudentData();
+        });
     }
     render(){
         const studentList = this.props.students.map((item,index)=>{
@@ -16,7 +30,7 @@ class StudentTable extends Component{
                         <td>{item.name}</td>
                         <td>{item.course}</td>
                         <td>{item.grade}</td>
-                        <td><button className='btn btn-danger'>Delete</button></td>
+                        <td><button onClick= {()=>{this.handleDelete(index)}} className='btn btn-danger'>Delete</button></td>
                     </tr>
                 )
             }
@@ -46,4 +60,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{fetchStudentData})(StudentTable);
+export default connect(mapStateToProps,{fetchStudentData, deleteStudent})(StudentTable);

@@ -5,18 +5,12 @@ if(!isset($PAGEACCESS) || $PAGEACCESS===false){
 }
 
 
-$output['test'][] = 'yo ho';
-$name = $post['name'];
-$course = $post['course'];
-$grade = $post['grade'];
+//$output['test'][] = 'yo ho';
+//$ID = $post['petID'];
+$id = $post["studentId"];
 
 
-//$query= "INSERT INTO students (name, course, grade) VALUES ('christian', 'chinese', '100')";
-
-$query = "INSERT INTO `students` SET `name` = ' $name ', `course` = ' $course ', `grade` = ' $grade '";
-
-//$sql = "INSERT INTO MyGuests (firstname, lastname, email)
-//VALUES ('John', 'Doe', 'john@example.com')";
+$query = "DELETE FROM `students` WHERE `id`= '$id'";
 
 $result = mysqli_query($conn, $query);
 $output['errors'][] = $query;

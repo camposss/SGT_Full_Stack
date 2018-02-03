@@ -72,14 +72,11 @@ switch($_GET['action']) {
                     require('./actions/add_student.php');
                 }
                 break;
-//                break;
-//            case 'login':
-//                if (!empty($post)) {
-//                    require('./actions/login.php');
-//                }else{
-//                    throw new Exception('Must have a post variable when getting resource login');
-//                }
-//                break;
+            case 'delete-student':
+                if (!empty($post)) {
+                    require('./actions/delete_student.php');
+                }
+                break;
 //            case 'vetlogin':
 //                if (!empty($post)) {
 //                    require('./actions/vet_login.php');
