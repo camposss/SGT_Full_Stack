@@ -7,7 +7,6 @@ import {addStudent} from "../actions/";
 class StudentGradeLayout extends Component{
     constructor(props){
         super(props);
-
         this.state= {
             form: {
                 name: '',
@@ -25,7 +24,6 @@ class StudentGradeLayout extends Component{
     handleAddButton(e){
         e.preventDefault();
         const {name,course,grade} = this.state.form;
-        console.log('the values of the form affter we submit ', this.state.form);
         this.props.addStudent(name,course,grade).then(()=>{
             this.props.fetchStudentData();
         })

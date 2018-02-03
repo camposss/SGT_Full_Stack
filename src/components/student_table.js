@@ -7,7 +7,6 @@ import '../assets/css/modal.css';
 class StudentTable extends Component{
     constructor(props){
         super(props);
-
         this.state= {
             deleteModal: false,
             studentIndex: null
@@ -20,7 +19,6 @@ class StudentTable extends Component{
         });
     }
     handleDelete(){
-        // console.log("this is the state after clicking delete button", index);
         const studentId= this.props.students[this.state.studentIndex].id;
         console.log('this is the index of what you clicked ', studentId);
         this.props.deleteStudent(studentId).then(()=>{
@@ -32,25 +30,28 @@ class StudentTable extends Component{
         });
     }
     confirmDeleteModal(){
-        // return PetListModal(this.state, self );
-        const {studentIndex}= this.state;
-        const index= this.props.students[studentIndex];
+        const studentInfo= this.props.students[this.state.studentIndex];
+        console.log('student info ', studentInfo);
         return(
             <span>
-          <div className='confirm-modal '>
-              <div className="content-modal">
-                  <div className="card">
-                      <div className="card-header">Are you sure you want to delete:</div>
-                      <div className="card-block">
-                      </div>
-                      <div className="card-footer">
-                            <button onClick={()=> this.handleDelete()} className='btn btn-outline-success'>Confirm</button>
-                            <button onClick={()=> this.setState({deleteModal: false, canDelete: false})} className='btn btn-outline-danger'>Cancel</button>
+              <div className='confirm-modal'>
+                  <div className="modal-content">
+                    <div className="modal-header">
+                        <div className="modal-title">
+                            <button onClick={()=> this.setState({deleteModal: false})} type="button" className="close" data-dismiss="modal">&times;</button>
+                            <h2 className="modal-title">Please confirm the following action</h2>
+                        </div>
+                    </div>
+                      <div className="modal-body">
+                      <p>Are you sure you want to delete : <strong>{studentInfo.name}</strong> from your grade table? </p>
+                          <div className="modal-footer">
+                                <button onClick={()=> this.handleDelete()} className='btn btn-success'>Confirm</button>
+                                <button onClick={()=> this.setState({deleteModal: false})} className='btn btn-danger'>Cancel</button>
+                          </div>
                       </div>
                   </div>
               </div>
-          </div>
-        </span>
+            </span>
         )
     }
     render(){
@@ -76,13 +77,11 @@ class StudentTable extends Component{
                     <th>Operations</th>
                 </tr>
                 </thead>
-                <tbody>
-                {studentList}
-                </tbody>
-                {this.state.deleteModal? this.confirmDeleteModal(): ''}
+                <tbody>{studentList}</tbody>
+                <div>
+                    {this.state.deleteModal? this.confirmDeleteModal(): ''}
+                </div>
             </table>
-
-
         )
     }
 }

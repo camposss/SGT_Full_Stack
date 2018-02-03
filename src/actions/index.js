@@ -18,8 +18,6 @@ export function addStudent(name,course,grade) {
         grade: grade
 
     });
-
-    console.log('the request in actions? ',request);
     return {
         type: types.ADD_STUDENT,
         payload: request
@@ -31,8 +29,6 @@ export function deleteStudent(studentId) {
         studentId: studentId
 
     });
-
-    console.log('the request in actions? ',request);
     return {
         type: types.DELETE_STUDENT,
         payload: request
