@@ -5,19 +5,33 @@ import StudentTable from './student_table';
 import {addStudent} from "../actions/";
 
 class StudentGradeLayout extends Component{
+    constructor(props){
+        super(props);
 
-    // componentDidMount() {
-    //     this.props.fetchStudentData().then(()=>{
-    //         console.log('these are the props in student grade layout comp ', this.props.students);
-    //     })
-    // }
-    handleAddButton(){
-        console.log('we are trying to add something');
-        this.props.addStudent().then(()=>{
+        this.state= {
+            form: {
+                name: '',
+                course: '',
+                grade: ''
+            }
+        }
+    }
+    handleInputChange(e){
+        const {form} = this.state;
+        const {name,value}= e.target;
+        form[name]= value;
+        this.setState({form: {...form}});
+    }
+    handleAddButton(e){
+        e.preventDefault();
+        const {name,course,grade} = this.state.form;
+        console.log('the values of the form affter we submit ', this.state.form);
+        this.props.addStudent(name,course,grade).then(()=>{
             this.props.fetchStudentData();
         })
     }
     render(){
+        const {name,course,grade}= this.state.form;
         return(
         <div className="container">
             <div className="row">
@@ -28,61 +42,37 @@ class StudentGradeLayout extends Component{
                     <small className = "pull-right hidden-md hidden-lg">Grade Average : <span className="avgGrade label label-default">0</span></small>
                 </h3>
             </div>
-            <div className="student-add-form col-md-4 pull-right">
-                <h4>Add Student</h4>
-                <div className="input-group form-group">
-            <span className="input-group-addon">
-                <span className="glyphicon glyphicon-user"></span>
-            </span>
-                    <input type="text" className="form-control" name="studentName" id="studentName" placeholder="Student Name"/>
+            <form>
+                <div className="student-add-form col-md-4 pull-right">
+                    <h4>Add Student</h4>
+                    <div className="input-group form-group">
+                        <span className="input-group-addon">
+                            <span className="glyphicon glyphicon-user"></span>
+                        </span>
+                        <input onChange={(e)=>this.handleInputChange(e)} type="text" className="form-control" name="name" value = {name} id="studentName" placeholder="Student Name"/>
+                    </div>
+                    <div className="input-group form-group">
+                        <span className="input-group-addon">
+                            <span className="glyphicon glyphicon-list-alt"></span>
+                        </span>
+                        <input onChange={(e)=>this.handleInputChange(e)} type="text" className="form-control" name="course" id="course" value={course}
+                               placeholder="Student Course"/>
+                    </div>
+                    <div className="input-group form-group">
+                        <span className="input-group-addon">
+                            <span className="glyphicon glyphicon-education"></span>
+                        </span>
+                        <input onChange={(e)=>this.handleInputChange(e)} type="text" className="form-control" name="grade" id="studentGrade" value={grade}
+                               placeholder="Student Grade"/>
+                    </div>
+                    <button type="submit" className="btn btn-success" onClick={(e)=>this.handleAddButton(e)}>Add</button>
+                    <button type="button" className="btn btn-default" onClick="">Cancel</button>
+                    <button type="button" className="btn btn-info" onClick="">Get Data From Server</button>
                 </div>
-                <div className="input-group form-group">
-            <span className="input-group-addon">
-                <span className="glyphicon glyphicon-list-alt"></span>
-            </span>
-                    <input type="text" className="form-control" name="course" id="course"
-                           placeholder="Student Course"/>
-                </div>
-                <div className="input-group form-group">
-            <span className="input-group-addon">
-                <span className="glyphicon glyphicon-education"></span>
-            </span>
-                    <input type="text" className="form-control" name="studentGrade" id="studentGrade"
-                           placeholder="Student Grade"/>
-                </div>
-                <button type="button" className="btn btn-success" onClick={()=>this.handleAddButton()}>Add</button>
-                <button type="button" className="btn btn-default" onClick="">Cancel</button>
-                <button type="button" className="btn btn-info" onClick="">Get Data From Server</button>
-            </div>
+            </form>
             <div className="student-list-container col-md-8">
-                <table className="table student-list pull-left">
-                    <thead>
-                    <tr>
-                        <th>Student Name</th>
-                        <th>Student Course</th>
-                        <th>Student Grade</th>
-                        <th>Operations</th>
-                    </tr>
-                    </thead>
-                    <StudentTable/>
-                </table>
+                <StudentTable/>
             </div>
-            {/*<div id="failureModal" className="modal fade" role="dialog">*/}
-                {/*<div className="modal-dialog">*/}
-                    {/*<div className="modal-content">*/}
-                        {/*<div className="modal-header">*/}
-                            {/*<button type="button" className="close" data-dismiss="modal">&times;</button>*/}
-                            {/*<h4 className="modal-title">Error!!!</h4>*/}
-                        {/*</div>*/}
-                        {/*<div className="modal-body">*/}
-                            {/*<p className="modal_text">Some text in the modal.</p>*/}
-                        {/*</div>*/}
-                        {/*<div className="modal-footer">*/}
-                            {/*<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
-            {/*</div>*/}
         </div>
         )
     }

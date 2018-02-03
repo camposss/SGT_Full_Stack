@@ -7,14 +7,14 @@ if(!isset($PAGEACCESS) || $PAGEACCESS===false){
 
 $output['test'][] = 'yo ho';
 //$ID = $post['petID'];
-//$name = $post['name'];
-//$course = $post['course'];
-//$grade = $post['grade'];
+$name = $post['name'];
+$course = $post['course'];
+$grade = $post['grade'];
 
 
 //$query= "INSERT INTO students (name, course, grade) VALUES ('christian', 'chinese', '100')";
 
-$query = "INSERT INTO `students` SET `name` = ' Christian ', `course` = ' Chinese ', `grade` = ' 100'";
+$query = "INSERT INTO `students` SET `name` = ' $post[name] ', `course` = ' $post[course] ', `grade` = ' $post[grade] '";
 
 //$sql = "INSERT INTO MyGuests (firstname, lastname, email)
 //VALUES ('John', 'Doe', 'john@example.com')";

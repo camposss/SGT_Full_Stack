@@ -11,11 +11,11 @@ export function fetchStudentData() {
 }
 
 const add_student_url = "http://localhost/database_connect/server.php?action=post&resource=add-student";
-export function addStudent() {
+export function addStudent(name,course,grade) {
     const request = axios.post(add_student_url, {
-        name: 'Christian',
-        course: 'Chinese',
-        grade: 100
+        name: name,
+        course: course,
+        grade: grade
 
     });
 

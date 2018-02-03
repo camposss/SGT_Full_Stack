@@ -6,9 +6,7 @@ import {fetchStudentData} from "../actions/";
 class StudentTable extends Component{
 
     componentDidMount() {
-        this.props.fetchStudentData().then(()=>{
-            console.log('these are the props in student grade layout comp ', this.props.students);
-        })
+        this.props.fetchStudentData();
     }
     render(){
         const studentList = this.props.students.map((item,index)=>{
@@ -24,9 +22,20 @@ class StudentTable extends Component{
             }
         });
         return(
-            <tbody>
+            <table className="table student-list pull-left">
+                <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Student Course</th>
+                    <th>Student Grade</th>
+                    <th>Operations</th>
+                </tr>
+                </thead>
+                <tbody>
                 {studentList}
-            </tbody>
+                </tbody>
+            </table>
+
 
         )
     }

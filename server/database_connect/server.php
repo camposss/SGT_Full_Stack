@@ -5,8 +5,8 @@ header("Access-Control-Allow-Headers: *");
 
 
 //
-//$postJSON = file_get_contents('php://input');
-//$post = json_decode($postJSON, TRUE);
+$postJSON = file_get_contents('php://input');
+$post = json_decode($postJSON, TRUE);
 
 $PAGEACCESS = true;
 require_once ('./connect.php');
@@ -68,7 +68,10 @@ switch($_GET['action']) {
     case 'post':
         switch ($_GET['resource']) {
             case 'add-student':
-                require('./actions/add_student.php');
+                if(!empty($post)){
+                    require('./actions/add_student.php');
+                }
+                break;
 //                break;
 //            case 'login':
 //                if (!empty($post)) {
