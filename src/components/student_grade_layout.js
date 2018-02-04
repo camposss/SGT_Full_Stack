@@ -84,6 +84,7 @@ class StudentGradeLayout extends Component{
     }
 
 }
+
 // function mapStateToProps(state){
 //     return{
 //         students: state.studentData
