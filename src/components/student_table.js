@@ -12,9 +12,6 @@ class StudentTable extends Component{
             deleteModal: false,
             studentIndex: null
         };
-        // propTypes= {
-        //     calculateAverage:   React.PropTypes.func
-        // }
         this.confirmDeleteModal= this.confirmDeleteModal.bind(this);
 
     }
@@ -63,22 +60,22 @@ class StudentTable extends Component{
         )
     }
     render(){
+        console.log('these are teh props in render student table ', this.props);
         const studentList = this.props.students.map((item,index)=>{
-            if(index>195){
-                return(
-                    <tr key={index}>
-                        <td>{item.name}</td>
-                        <td>{item.course}</td>
-                        <td>{item.grade}</td>
-                        <td>
-                            <button onClick= {()=>{this.setState({deleteModal: true, studentIndex:index})}} className='btn btn-danger'>Delete
-                            </button>
-                            <button className='btn btn-primary'>Update</button>
-                        </td>
-                        <td></td>
-                    </tr>
-                )
-            }
+            return(
+                <tr key={index}>
+                    <td>{item.name}</td>
+                    <td>{item.course}</td>
+                    <td>{item.grade}</td>
+                    <td>
+                        <button onClick= {()=>{this.setState({deleteModal: true, studentIndex:index})}} className='btn btn-danger'>Delete
+                        </button>
+                        <button className='btn btn-primary'>Update</button>
+                    </td>
+                    {/*<td></td>*/}
+                </tr>
+            )
+
         });
         return(
             <table className="table student-list pull-left">
@@ -100,7 +97,8 @@ class StudentTable extends Component{
 }
 function mapStateToProps(state){
     return{
-        students: state.studentData
+        students: state.studentData.students,
+        average: state.studentData.average
     }
 }
 
