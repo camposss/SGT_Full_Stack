@@ -9,9 +9,10 @@ $output['test'][] = 'yo ho';
 $name = $post['name'];
 $course = $post['course'];
 $grade = $post['grade'];
+$id= $post['studentId'];
 
 
-$query = "INSERT INTO `students` SET `name` = ' $name ', `course` = ' $course ', `grade` = ' $grade '";
+$query = "UPDATE `students` SET `name` = ' $name ', `course` = ' $course ', `grade` = ' $grade ' WHERE `id`= $id";
 
 
 $result = mysqli_query($conn, $query);

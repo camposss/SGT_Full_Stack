@@ -80,12 +80,10 @@ class StudentGradeLayout extends Component{
                                placeholder="Student Grade"/>
                     </div>
                     <button type="submit" className="btn btn-success" onClick={(e)=>this.handleAddButton(e)}>Add</button>
-                    {/*<button type="button" className="btn btn-default" onClick="">Cancel</button>*/}
-                    {/*<button type="button" className="btn btn-info" onClick="">Get Data From Server</button>*/}
                 </div>
             </form>
             <div className="student-list-container col-md-8">
-                <StudentTable/>
+                {students.length? <StudentTable/>: <h2 className="text-center">No Data Available</h2>}
             </div>
         </div>
         )

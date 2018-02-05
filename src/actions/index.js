@@ -34,3 +34,17 @@ export function deleteStudent(studentId) {
         payload: request
     };
 }
+const update_student_url = "http://localhost/database_connect/server.php?action=post&resource=update-student";
+export function updateStudent(form,studentId) {
+    const request = axios.post(update_student_url, {
+        name: form.name,
+        course: form.course,
+        grade: form.grade,
+        studentId: studentId
+
+    });
+    return {
+        type: types.UPDATE_STUDENT,
+        payload: request
+    };
+}
