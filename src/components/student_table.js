@@ -27,6 +27,7 @@ class StudentTable extends Component{
             })
 
         }).then(()=>{
+            console.log('these are the props after handle delete ', this.props);
             this.props.fetchStudentData();
         });
     }
@@ -63,7 +64,12 @@ class StudentTable extends Component{
                         <td>{item.name}</td>
                         <td>{item.course}</td>
                         <td>{item.grade}</td>
-                        <td><button onClick= {()=>{this.setState({deleteModal: true, studentIndex:index})}} className='btn btn-danger'>Delete</button></td>
+                        <td>
+                            <button onClick= {()=>{this.setState({deleteModal: true, studentIndex:index})}} className='btn btn-danger'>Delete
+                            </button>
+                            <button className='btn btn-primary'>Update</button>
+                        </td>
+                        <td></td>
                     </tr>
                 )
             }

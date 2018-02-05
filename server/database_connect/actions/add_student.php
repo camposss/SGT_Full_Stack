@@ -10,13 +10,7 @@ $name = $post['name'];
 $course = $post['course'];
 $grade = $post['grade'];
 
-
-//$query= "INSERT INTO students (name, course, grade) VALUES ('christian', 'chinese', '100')";
-
 $query = "INSERT INTO `students` SET `name` = ' $name ', `course` = ' $course ', `grade` = ' $grade '";
-
-//$sql = "INSERT INTO MyGuests (firstname, lastname, email)
-//VALUES ('John', 'Doe', 'john@example.com')";
 
 $result = mysqli_query($conn, $query);
 $output['errors'][] = $query;
