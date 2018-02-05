@@ -104,7 +104,7 @@ class StudentGradeLayout extends Component{
                 </div>
             </form>
             <div className="student-list-container col-md-8">
-                <StudentTable/>
+                <StudentTable calculateAverage={this.calculateGradeAverage}/>
             </div>
         </div>
         )

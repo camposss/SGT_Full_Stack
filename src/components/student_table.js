@@ -6,13 +6,19 @@ import '../assets/css/modal.css';
 
 class StudentTable extends Component{
     constructor(props){
+
         super(props);
         this.state= {
             deleteModal: false,
             studentIndex: null
         };
+        // propTypes= {
+        //     calculateAverage:   React.PropTypes.func
+        // }
         this.confirmDeleteModal= this.confirmDeleteModal.bind(this);
+
     }
+
     componentDidMount() {
         this.props.fetchStudentData().then(()=>{
             console.log('these are the props in student table ', this. props);
