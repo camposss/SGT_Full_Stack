@@ -20,15 +20,16 @@ class StudentComponent extends Component {
         };
         this.confirmDeleteModal= this.confirmDeleteModal.bind(this);
     }
-    componentWillReceiveProps(nextProps){
-        this.setState({
-            form:{
-                name:nextProps.name,
-                course: nextProps.course,
-                grade: nextProps.grade
-            }
-        })
-    }
+    // componentWillReceiveProps(nextProps){
+    //
+    //     this.setState({
+    //         form:{
+    //             name:nextProps.name,
+    //             course: nextProps.course,
+    //             grade: nextProps.grade
+    //         }
+    //     })
+    // }
     handleInputChange(e){
         const {form} = this.state;
         const {name,value}= e.target;
@@ -38,14 +39,13 @@ class StudentComponent extends Component {
     handleDelete(){
         const studentId= this.props.id;
         this.props.deleteStudent(studentId).then(()=>{
-            this.setState({
-                deleteModal: false,
-                showManageButtons: false
-            })
-
-        }).then(()=>{
             this.props.fetchStudentData();
         });
+        this.setState({
+            deleteModal: false,
+            showManageButtons: false
+        })
+
     }
     confirmDeleteModal(){
         const studentName= this.props.name;
@@ -55,7 +55,7 @@ class StudentComponent extends Component {
                   <div className="modal-content">
                     <div className="modal-header">
                         <div className="modal-title">
-                            <button onClick={()=> this.setState({deleteModal: false, showManageButtons: false})} type="button" className="close" data-dismiss="modal">&times;</button>
+                            <button onClick={()=> this.setState({deleteModal: false, showManageButtons: true})} type="button" className="close" data-dismiss="modal">&times;</button>
                             <h2 className="modal-title">Please confirm the following action</h2>
                         </div>
                     </div>
@@ -63,7 +63,7 @@ class StudentComponent extends Component {
                       <p>Are you sure you want to delete : <strong>{studentName}</strong> from your grade table? </p>
                           <div className="modal-footer">
                                 <button onClick={()=> this.handleDelete()} className='btn btn-success'>Confirm</button>
-                                <button onClick={()=> this.setState({deleteModal: false, showManageButtons:false})} className='btn btn-danger'>Cancel</button>
+                                <button onClick={()=> this.setState({deleteModal: false, showManageButtons:true})} className='btn btn-danger'>Cancel</button>
                           </div>
                       </div>
                   </div>
@@ -96,8 +96,10 @@ class StudentComponent extends Component {
                     {!showManageButtons?
                         <button onClick={()=> this.setState({...this.state, showManageButtons: true})} className='btn btn-info'>Manage</button>:
                         <span>
+                            {/*<span onClick= {()=>{this.setState({deleteModal: true})}} className="glyphicon glyphicon-remove-sign"></span>*/}
                             <button onClick= {()=>{this.setState({deleteModal: true})}} className='btn btn-danger'>Delete</button>
-                            <button onClick={()=> this.setState({...this.state, canEdit: true})} className='btn btn-primary'>Update</button>
+                            <button onClick={()=> this.setState({...this.state, canEdit: true})} className='btn btn-primary'>Edit</button>
+                            <button onClick= {()=>this.setState({...this.state, showManageButtons:false})} className='btn btn-default' >Back</button>
                         </span>
                     }
 
@@ -110,7 +112,9 @@ class StudentComponent extends Component {
                 <td><input onChange= {(e)=>this.handleInputChange(e)} type= 'text' name='name' value={name} /></td>
                 <td><input onChange= {(e)=>this.handleInputChange(e)} type= 'text' name='course' value={course} /></td>
                 <td><input onChange= {(e)=>this.handleInputChange(e)} type= 'number' name='grade' value={grade} /></td>
-                <td><button onClick={()=> this.saveChanges()} className='btn btn-success'>Save</button></td>
+                <td>
+                    <button onClick={()=> this.saveChanges()} className='btn btn-success'>Save</button>
+                </td>
             </tr>
         );
         if(canEdit){

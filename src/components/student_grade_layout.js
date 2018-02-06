@@ -9,11 +9,11 @@ import { Field, reduxForm } from "redux-form";
 class StudentGradeLayout extends Component{
     constructor(props){
         super(props);
+
     }
     componentDidMount(){
         this.props.fetchStudentData().then(()=>{
             console.log('these are teh props in student table layout ,', this.props);
-
         });
     }
     renderInput({ placeholder, label, input, type, meta: { touched, error, active, visited } }) {
@@ -27,8 +27,6 @@ class StudentGradeLayout extends Component{
         );
     }
     handleFormSubmission(values){
-        console.log('thse are teh values,', values);
-        console.log('thse are teh props in handle submission ', this.props);
         this.props.addStudent(values).then(()=>{
             this.props.fetchStudentData();
         }).then(()=>{
@@ -43,8 +41,8 @@ class StudentGradeLayout extends Component{
                 <h1 className="  page-header visible-md visible-lg">Student Grade Table
                     <small className = " pull-right visible-md visible-lg">Grade Average : <span className="avgGrade label label-default">{students.length? average: 0}</span></small>
                 </h1>
-                <h3 className = "col-xs-12 page-header hidden-md hidden-lg">Student Grade Table
-                    <small className = "mobileGradeAverage col-xs-12 pull-right hidden-md hidden-lg">Grade Average : <span className="avgGrade label label-default">{students.length? average: 0}</span></small>
+                <h3 className = "col-xs-12 text-center page-header hidden-md hidden-lg">Student Grade Table
+                    <small className = "mobileGradeAverage text-center col-xs-12 pull-right hidden-md hidden-lg">Grade Average : <span className="avgGrade label label-default">{students.length? average: 0}</span></small>
                 </h3>
             </div>
             <form onSubmit={this.props.handleSubmit(this.handleFormSubmission.bind(this))}>
