@@ -40,11 +40,11 @@ class StudentGradeLayout extends Component{
         return(
         <div className="container">
             <div className="row">
-                <h1 className="page-header visible-md visible-lg">Student Grade Table
-                    <small className = "pull-right visible-md visible-lg">Grade Average : <span className="avgGrade label label-default">{students.length? average: 0}</span></small>
+                <h1 className="  page-header visible-md visible-lg">Student Grade Table
+                    <small className = " pull-right visible-md visible-lg">Grade Average : <span className="avgGrade label label-default">{students.length? average: 0}</span></small>
                 </h1>
-                <h3 className = "page-header hidden-md hidden-lg">Student Grade Table
-                    <small className = "pull-right hidden-md hidden-lg">Grade Average : <span className="avgGrade label label-default">{students.length? average: 0}</span></small>
+                <h3 className = "col-xs-12 page-header hidden-md hidden-lg">Student Grade Table
+                    <small className = "mobileGradeAverage col-xs-12 pull-right hidden-md hidden-lg">Grade Average : <span className="avgGrade label label-default">{students.length? average: 0}</span></small>
                 </h3>
             </div>
             <form onSubmit={this.props.handleSubmit(this.handleFormSubmission.bind(this))}>

@@ -48,3 +48,6 @@ table td:nth-child(2){
     border: 1px solid #ccc;
     margin-bottom: 0;
 }
+.mobileGradeAverage{
+    padding-left: 0;
+}
