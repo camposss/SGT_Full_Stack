@@ -3,17 +3,12 @@ import {connect} from 'react-redux';
 import {fetchStudentData} from "../actions/";
 import StudentTable from './student_table';
 import {addStudent} from "../actions/";
+import { Field, reduxForm } from "redux-form";
+
 
 class StudentGradeLayout extends Component{
     constructor(props){
         super(props);
-        this.state= {
-            form: {
-                name: '',
-                course: '',
-                grade: ''
-            }
-        }
     }
     componentDidMount(){
         this.props.fetchStudentData().then(()=>{
@@ -21,30 +16,26 @@ class StudentGradeLayout extends Component{
 
         });
     }
-    handleInputChange(e){
-        const {form} = this.state;
-        const {name,value}= e.target;
-        form[name]= value;
-        this.setState({form: {...form}});
+    renderInput({ placeholder, label, input, type, meta: { touched, error, active, visited } }) {
+        return (
+            <span>
+                {/*<label>{label}</label>*/}
+                <input placeholder= {placeholder} className="form-control" type={type} {...input} />
+                <p className="inputErrorMessage text-danger text-center">{ input.name==='' ? touched && visited && error : touched && !active && error }</p>
+            </span>
+
+        );
     }
-    handleAddButton(e){
-        e.preventDefault();
-        const {name,course,grade} = this.state.form;
-        this.props.addStudent(name,course,grade).then(()=>{
+    handleFormSubmission(values){
+        console.log('thse are teh values,', values);
+        console.log('thse are teh props in handle submission ', this.props);
+        this.props.addStudent(values).then(()=>{
             this.props.fetchStudentData();
         }).then(()=>{
-            // this.calculateGradeAverage(this.props.students);
-            this.setState({
-                form: {
-                    name: '',
-                    course: '',
-                    grade: ''
-                }
-            })
+            this.props.reset();
         });
     }
     render(){
-        const {name,course,grade}= this.state.form;
         const {average,students}= this.props;
         return(
         <div className="container">
@@ -56,30 +47,28 @@ class StudentGradeLayout extends Component{
                     <small className = "pull-right hidden-md hidden-lg">Grade Average : <span className="avgGrade label label-default">{students.length? average: 0}</span></small>
                 </h3>
             </div>
-            <form>
+            <form onSubmit={this.props.handleSubmit(this.handleFormSubmission.bind(this))}>
                 <div className="student-add-form col-md-4 pull-right">
                     <h4>Add Student</h4>
                     <div className="input-group form-group">
                         <span className="input-group-addon">
                             <span className="glyphicon glyphicon-user"></span>
                         </span>
-                        <input onChange={(e)=>this.handleInputChange(e)} type="text" className="form-control" name="name" value = {name} id="studentName" placeholder="Student Name"/>
+                        <Field placeholder='Student Name' name='name' label='Name' type='text' component={this.renderInput}/>
                     </div>
                     <div className="input-group form-group">
                         <span className="input-group-addon">
                             <span className="glyphicon glyphicon-list-alt"></span>
                         </span>
-                        <input onChange={(e)=>this.handleInputChange(e)} type="text" className="form-control" name="course" id="course" value={course}
-                               placeholder="Student Course"/>
+                        <Field placeholder= 'Course' name='course' label='Course' type='text' component={this.renderInput}/>
                     </div>
                     <div className="input-group form-group">
                         <span className="input-group-addon">
                             <span className="glyphicon glyphicon-education"></span>
                         </span>
-                        <input onChange={(e)=>this.handleInputChange(e)} type="text" className="form-control" name="grade" id="studentGrade" value={grade}
-                               placeholder="Student Grade"/>
+                        <Field placeholder= 'Grade' name='grade' label='Grade' type='number' component={this.renderInput}/>
                     </div>
-                    <button type="submit" className="btn btn-success" onClick={(e)=>this.handleAddButton(e)}>Add</button>
+                    <button type="submit" className="btn btn-success">Add</button>
                 </div>
             </form>
             <div className="student-list-container col-md-8">
@@ -97,6 +86,24 @@ function mapStateToProps(state){
         average: state.studentData.average
     }
 }
+function validate(values) {
+    const error = {};
+    if(!values.name){
+        error.name = 'Please enter the student\'s name';
+    }
+    if(!values.course){
+        error.course = 'Please enter a course';
+    }
+    if(!values.grade){
+        error.grade = 'Please enter a grade';
+    }
+    return error;
+}
+
+StudentGradeLayout = reduxForm({
+    form: "student-grade-table",
+    validate: validate
+})(StudentGradeLayout);
 //
 // export default connect(mapStateToProps,{fetchStudentData})(StudentGradeLayout);
 
