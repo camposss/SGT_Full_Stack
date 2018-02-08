@@ -11,13 +11,10 @@ class StudentTable extends Component{
     }
 
     componentDidMount() {
-        this.props.fetchStudentData().then(()=>{
-            console.log('these are the props in student table ', this. props);
-        });
+        this.props.fetchStudentData();
     }
 
     render(){
-        console.log('these are teh props in render student table ', this.props);
         const studentList = this.props.students.map((item,index)=>{
             return(
                 <StudentComponent key={index} index={index} {...item}/>

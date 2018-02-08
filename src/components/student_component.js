@@ -39,13 +39,14 @@ class StudentComponent extends Component {
     handleDelete(){
         const studentId= this.props.id;
         this.props.deleteStudent(studentId).then(()=>{
-            this.props.fetchStudentData();
-        });
-        this.setState({
-            deleteModal: false,
-            showManageButtons: false
-        })
-
+                this.props.fetchStudentData().then(()=>{
+                    this.setState({
+                        deleteModal: false,
+                        showManageButtons: false
+                    })
+                })
+        }
+        );
     }
     confirmDeleteModal(){
         const studentName= this.props.name;
@@ -72,7 +73,6 @@ class StudentComponent extends Component {
         )
     }
     saveChanges(){
-        console.log('we clicked the save Changes button and now are in the function', this.props);
         this.props.updateStudent(this.state.form, this.props.id).then(()=>{
             this.props.fetchStudentData().then(()=>{
                 this.setState({

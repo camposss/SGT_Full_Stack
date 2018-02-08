@@ -12,9 +12,7 @@ class StudentGradeLayout extends Component{
 
     }
     componentDidMount(){
-        this.props.fetchStudentData().then(()=>{
-            console.log('these are teh props in student table layout ,', this.props);
-        });
+        this.props.fetchStudentData();
     }
     renderInput({ placeholder, label, input, type, meta: { touched, error, active, visited } }) {
         return (
