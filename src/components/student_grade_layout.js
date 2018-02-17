@@ -4,6 +4,7 @@ import {fetchStudentData} from "../actions/";
 import StudentTable from './student_table';
 import {addStudent} from "../actions/";
 import { Field, reduxForm } from "redux-form";
+import * as regex from '../helpers/regex';
 
 
 class StudentGradeLayout extends Component{
@@ -13,6 +14,7 @@ class StudentGradeLayout extends Component{
     }
     componentDidMount(){
         this.props.fetchStudentData();
+        console.log(regex);
     }
     renderInput({ placeholder, label, input, type, meta: { touched, error, active, visited } }) {
         return (
@@ -84,14 +86,27 @@ function mapStateToProps(state){
 }
 function validate(values) {
     const error = {};
+    error.invalidName =regex.validateName(values.name);
+    error.invalidCourse= regex.validateName(values.course);
+    error.invalidGrade =regex.validateNumber(values.grade);
+    console.log(error);
     if(!values.name){
-        error.name = 'Please enter the student\'s name';
+        error.name= "Please enter a student name";
+    }
+    if(error.invalidName){
+        error.name= "Please enter a valid name";
     }
     if(!values.course){
         error.course = 'Please enter a course';
     }
+    if(error.invalidCourse){
+        error.course= "Please enter an appropriate course"
+    }
     if(!values.grade){
         error.grade = 'Please enter a grade';
+    }
+    if(error.invalidGrade){
+        error.grade= "Please enter a grade between 0-100";
     }
     return error;
 }
