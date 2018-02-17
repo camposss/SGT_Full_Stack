@@ -5,7 +5,7 @@ import {fetchStudentData,deleteStudent,updateStudent} from "../actions/";
 
 
 
-class StudentComponent extends Component {
+class IndividualStudent extends Component {
     constructor(props) {
         super(props);
         this.state= {
@@ -132,4 +132,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{fetchStudentData, deleteStudent,updateStudent})(StudentComponent);
+export default connect(mapStateToProps,{fetchStudentData, deleteStudent,updateStudent})(IndividualStudent);

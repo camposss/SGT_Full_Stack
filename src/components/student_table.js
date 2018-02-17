@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchStudentData} from "../actions/";
-import StudentComponent from './student_component';
+import IndividualStudent from './individual_student';
 import '../assets/css/modal.css';
 
 
@@ -17,7 +17,7 @@ class StudentTable extends Component{
     render(){
         const studentList = this.props.students.map((item,index)=>{
             return(
-                <StudentComponent key={index} index={index} {...item}/>
+                <IndividualStudent key={index} index={index} {...item}/>
             )
         });
         return(
