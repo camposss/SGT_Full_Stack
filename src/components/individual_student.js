@@ -16,7 +16,8 @@ class IndividualStudent extends Component {
                 course: this.props.course,
                 grade: this.props.grade
             },
-            showManageButtons: false
+            showManageButtons: false,
+            canDelete: false
         };
         this.confirmDeleteModal= this.confirmDeleteModal.bind(this);
     }
@@ -37,6 +38,8 @@ class IndividualStudent extends Component {
         this.setState({form: {...form}});
     }
     async handleDelete(){
+        const {canDelete}= this.state;
+        if(!canDelete) return;
         const studentId= this.props.id;
         const deleteRes = await this.props.deleteStudent(studentId);
         const fetchRes = await this.props.fetchStudentData();
@@ -74,7 +77,8 @@ class IndividualStudent extends Component {
             this.props.fetchStudentData().then(()=>{
                 this.setState({
                     canEdit: false,
-                    showManageButtons: false
+                    showManageButtons: false,
+                    canDelete: true
                 })
             });
             console.log('these are now the students after updating ', this.props.students);
@@ -83,7 +87,7 @@ class IndividualStudent extends Component {
     }
     render(){
         const {name, course, grade}= this.state.form;
-        const {canEdit,showManageButtons}= this.state;
+        const {canEdit,showManageButtons, canDelete}= this.state;
         const staticStudent= (
             <tr>
                 <td>{this.props.name}</td>
@@ -91,11 +95,11 @@ class IndividualStudent extends Component {
                 <td>{this.props.grade}</td>
                 <td>
                     {!showManageButtons?
-                        <button onClick={()=> this.setState({...this.state, showManageButtons: true})} className='btn btn-info'>Manage</button>:
+                        <button onClick={()=> this.setState({...this.state, showManageButtons: true, canDelete: true})} className='btn btn-info'>Manage</button>:
                         <span>
                             {/*<span onClick= {()=>{this.setState({deleteModal: true})}} className="glyphicon glyphicon-remove-sign"></span>*/}
-                            <button onClick= {()=>{this.setState({deleteModal: true})}} className='btn btn-danger'>Delete</button>
-                            <button onClick={()=> this.setState({...this.state, canEdit: true})} className='btn btn-primary'>Edit</button>
+                            <button onClick= {()=>{this.setState({deleteModal: true})}} className='btn btn-danger' aria-disabled={!canDelete? "aria-disabled" : ''}>Delete</button>
+                            <button onClick={()=> this.setState({...this.state, canEdit: true, canDelete: false })} className='btn btn-primary'>Edit</button>
                             <button onClick= {()=>this.setState({...this.state, showManageButtons:false})} className='btn btn-default' >Back</button>
                         </span>
                     }
