@@ -42,7 +42,7 @@ class IndividualStudent extends Component {
         const fetchRes = await this.props.fetchStudentData();
         this.setState({
             deleteModal:false,
-            showManageButtons: false
+            // showManageButtons: false
         });
     }
     confirmDeleteModal(){
