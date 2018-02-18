@@ -11,9 +11,9 @@ class AddForm extends Component{
         super(props);
 
     }
-    componentDidMount(){
-        console.log(this.props);
-    }
+    // componentDidMount(){
+    //     console.log(this.props);
+    // }
     renderInput({ placeholder, label, input, type, meta: { touched, error, active, visited } }) {
         return (
             <span>

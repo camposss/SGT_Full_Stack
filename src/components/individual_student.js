@@ -36,17 +36,14 @@ class IndividualStudent extends Component {
         form[name]= value;
         this.setState({form: {...form}});
     }
-    handleDelete(){
+    async handleDelete(){
         const studentId= this.props.id;
-        this.props.deleteStudent(studentId).then(()=>{
-                this.props.fetchStudentData().then(()=>{
-                    this.setState({
-                        deleteModal: false,
-                        showManageButtons: false
-                    })
-                })
-        }
-        );
+        const deleteRes = await this.props.deleteStudent(studentId);
+        const fetchRes = await this.props.fetchStudentData();
+        this.setState({
+            deleteModal:false,
+            showManageButtons: false
+        });
     }
     confirmDeleteModal(){
         const studentName= this.props.name;
