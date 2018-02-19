@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import '../assets/css/app.css';
 import {fetchStudentData,deleteStudent,updateStudent} from "../actions/";
+import { Field, reduxForm } from "redux-form";
+import * as regex from '../helpers/regex';
+
 
 
 
@@ -17,7 +20,6 @@ class IndividualStudent extends Component {
                 grade: this.props.grade
             },
             showManageButtons: false,
-            canDelete: false
         };
         this.confirmDeleteModal= this.confirmDeleteModal.bind(this);
     }
@@ -31,21 +33,38 @@ class IndividualStudent extends Component {
     //         }
     //     })
     // }
-    handleInputChange(e){
-        const {form} = this.state;
-        const {name,value}= e.target;
-        form[name]= value;
-        this.setState({form: {...form}});
+    renderInput({ placeholder, label, input, type, meta: { touched, error, active, visited } }) {
+        return (
+            <span>
+                {/*<label>{label}</label>*/}
+                <input placeholder= {placeholder} className="form-control" type={type} {...input} />
+                <p className="text-danger text-center">{ input.name==='' ? touched && visited && error : touched && !active && error }</p>
+            </span>
+
+        );
+    }
+    handleFormSubmission(values){
+        console.log('we are trynig to save');
+        this.props.updateStudent(values, this.props.id).then(()=>{
+            this.props.fetchStudentData().then(()=>{
+                this.setState({
+                    ...this.state,
+                    canEdit: false,
+                    showManageButtons: false,
+                })
+            });
+            this.props.destroy();
+            console.log('these are now the students after updating ', this.props.students);
+        });
     }
     async handleDelete(){
-        const {canDelete}= this.state;
-        if(!canDelete) return;
         const studentId= this.props.id;
         const deleteRes = await this.props.deleteStudent(studentId);
         const fetchRes = await this.props.fetchStudentData();
         this.setState({
+            ...this.state,
             deleteModal:false,
-            // showManageButtons: false
+            showManageButtons: true
         });
     }
     confirmDeleteModal(){
@@ -72,22 +91,13 @@ class IndividualStudent extends Component {
             </span>
         )
     }
-    saveChanges(){
-        this.props.updateStudent(this.state.form, this.props.id).then(()=>{
-            this.props.fetchStudentData().then(()=>{
-                this.setState({
-                    canEdit: false,
-                    showManageButtons: false,
-                    canDelete: true
-                })
-            });
-            console.log('these are now the students after updating ', this.props.students);
-        })
-
+    handleEdit(){
+        console.log('these are teh props after hitting edit ', this.props);
+        this.setState({...this.state, canEdit: true});
     }
     render(){
-        const {name, course, grade}= this.state.form;
-        const {canEdit,showManageButtons, canDelete}= this.state;
+        // const {name, course, grade}= this.state.form;
+        const {canEdit,showManageButtons}= this.state;
         const staticStudent= (
             <tr>
                 <td>{this.props.name}</td>
@@ -95,11 +105,10 @@ class IndividualStudent extends Component {
                 <td>{this.props.grade}</td>
                 <td>
                     {!showManageButtons?
-                        <button onClick={()=> this.setState({...this.state, showManageButtons: true, canDelete: true})} className='btn btn-info'>Manage</button>:
+                        <button onClick={()=> this.setState({...this.state, showManageButtons: true})} className='btn btn-info'>Manage</button>:
                         <span>
-                            {/*<span onClick= {()=>{this.setState({deleteModal: true})}} className="glyphicon glyphicon-remove-sign"></span>*/}
-                            <button onClick= {()=>{this.setState({deleteModal: true})}} className='btn btn-danger' aria-disabled={!canDelete? "aria-disabled" : ''}>Delete</button>
-                            <button onClick={()=> this.setState({...this.state, canEdit: true, canDelete: false })} className='btn btn-primary'>Edit</button>
+                            <button onClick= {()=>{this.setState({...this.state, deleteModal: true})}} className='btn btn-danger'>Delete</button>
+                            <button onClick={()=> this.handleEdit()} className='btn btn-primary'>Edit</button>
                             <button onClick= {()=>this.setState({...this.state, showManageButtons:false})} className='btn btn-default' >Back</button>
                         </span>
                     }
@@ -110,11 +119,12 @@ class IndividualStudent extends Component {
         );
         const inputFields= (
             <tr>
-                <td><input onChange= {(e)=>this.handleInputChange(e)} type= 'text' name='name' value={name} /></td>
-                <td><input onChange= {(e)=>this.handleInputChange(e)} type= 'text' name='course' value={course} /></td>
-                <td><input onChange= {(e)=>this.handleInputChange(e)} type= 'number' name='grade' value={grade} /></td>
+                {/*<Field placeholder='Student Name' name='name' label='Name' type='text' component={this.renderInput}/>*/}
+                <td><Field component= {this.renderInput} type= 'text' name='name'  placeholder={this.props.name} value={this.props.name} /></td>
+                <td><Field component= {this.renderInput} type= 'text' name='course' placeholder={this.props.course} value={this.props.course} /></td>
+                <td><Field component= {this.renderInput} type= 'number' name='grade' placeholder = {this.props.grade} value={this.props.grade} /></td>
                 <td>
-                    <button onClick={()=> this.saveChanges()} className='btn btn-success'>Save</button>
+                    <button onClick={this.props.handleSubmit(this.handleFormSubmission.bind(this))} type='submit' className='btn btn-success'>Save</button>
                 </td>
             </tr>
         );
@@ -125,6 +135,35 @@ class IndividualStudent extends Component {
         }
     }
 }
+function validate(values) {
+    const error = {};
+    error.invalidName =regex.validateName(values.name);
+    error.invalidCourse= regex.validateName(values.course);
+    error.invalidGrade =regex.validateNumber(values.grade);
+    if(!values.name){
+        error.name= "Please enter a name";
+    }
+    if(error.invalidName){
+        error.name= "Valid name required";
+    }
+    if(!values.course){
+        error.course = 'Please enter a course';
+    }
+    if(error.invalidCourse){
+        error.course= "Valid course required"
+    }
+    if(!values.grade){
+        error.grade = 'Please enter a grade';
+    }
+    if(error.invalidGrade){
+        error.grade= "Grade between 0-100 required";
+    }
+    return error;
+}
+IndividualStudent = reduxForm({
+    form: "individual-student",
+    validate: validate
+})(IndividualStudent);
 
 function mapStateToProps(state){
     return{
