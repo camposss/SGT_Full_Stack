@@ -9,11 +9,9 @@ class StudentTable extends Component{
     constructor(props){
         super(props);
     }
-
     componentDidMount() {
         this.props.fetchStudentData();
     }
-
     render(){
         const studentList = this.props.students.map((item,index)=>{
             return(
@@ -40,5 +38,4 @@ function mapStateToProps(state){
         students: state.studentData.students,
     }
 }
-
 export default connect(mapStateToProps,{fetchStudentData})(StudentTable);

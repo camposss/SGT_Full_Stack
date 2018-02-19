@@ -5,7 +5,6 @@ import StudentTable from './student_table';
 import AddForm from './add_form';
 import '../assets/css/app.css';
 
-
 class App extends Component{
     constructor(props){
         super(props);

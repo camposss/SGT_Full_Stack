@@ -3,8 +3,6 @@ import {connect} from 'react-redux';
 import '../assets/css/app.css';
 import {fetchStudentData,deleteStudent,updateStudent} from "../actions/";
 
-
-
 class IndividualStudent extends Component {
     constructor(props) {
         super(props);
@@ -20,16 +18,6 @@ class IndividualStudent extends Component {
         };
         this.confirmDeleteModal= this.confirmDeleteModal.bind(this);
     }
-    // componentWillReceiveProps(nextProps){
-    //
-    //     this.setState({
-    //         form:{
-    //             name:nextProps.name,
-    //             course: nextProps.course,
-    //             grade: nextProps.grade
-    //         }
-    //     })
-    // }
     handleInputChange(e){
         const {form} = this.state;
         const {name,value}= e.target;
@@ -77,7 +65,6 @@ class IndividualStudent extends Component {
                     showManageButtons: false
                 })
             });
-            console.log('these are now the students after updating ', this.props.students);
         })
 
     }
@@ -93,7 +80,6 @@ class IndividualStudent extends Component {
                     {!showManageButtons?
                         <button onClick={()=> this.setState({...this.state, showManageButtons: true})} className='btn btn-info'>Manage</button>:
                         <span>
-                            {/*<span onClick= {()=>{this.setState({deleteModal: true})}} className="glyphicon glyphicon-remove-sign"></span>*/}
                             <button onClick= {()=>{this.setState({deleteModal: true})}} className='btn btn-danger'>Delete</button>
                             <button onClick={()=> this.setState({...this.state, canEdit: true})} className='btn btn-primary'>Edit</button>
                             <button onClick= {()=>this.setState({...this.state, showManageButtons:false})} className='btn btn-default' >Back</button>
@@ -121,7 +107,6 @@ class IndividualStudent extends Component {
         }
     }
 }
-
 function mapStateToProps(state){
     return{
         students: state.studentData.students,

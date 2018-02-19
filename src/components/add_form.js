@@ -11,9 +11,6 @@ class AddForm extends Component{
         super(props);
 
     }
-    // componentDidMount(){
-    //     console.log(this.props);
-    // }
     renderInput({ placeholder, label, input, type, meta: { touched, error, active, visited } }) {
         return (
             <span>
@@ -93,7 +90,5 @@ AddForm = reduxForm({
     form: "add-form",
     validate: validate
 })(AddForm);
-//
-// export default connect(mapStateToProps,{fetchStudentData})(StudentGradeLayout);
 
 export default connect(null, {addStudent, fetchStudentData}) (AddForm);
