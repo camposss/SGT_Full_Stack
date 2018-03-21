@@ -1,31 +1,18 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
-
-//
 $postJSON = file_get_contents('php://input');
 $post = json_decode($postJSON, TRUE);
 
 $PAGEACCESS = true;
 require_once ('./connect.php');
-//require_once('../file_upload/aws_s3/credential.php');
-
 
 $output = [
     'success' => false,
     'data' => [],
     'errors' => [],
 ];
-//
-//if(empty($_GET['action'])){
-//    $_GET['action'] = 'get';
-//}
-//if(empty($_GET['resource'])){
-//    $_GET['action'] = 'students';
-//}
-
 switch($_GET['action']) {
     case 'get':
         switch ($_GET['resource']) {
@@ -59,7 +46,4 @@ if (isset($students)) {
 }
 
 $json_output = json_encode($output);
-
 print($json_output);
-
-
