@@ -1,7 +1,7 @@
 import axios from "axios";
 import types from "./types.js";
 
-const fetch_student_url = "/server/database_connect/server.php?action=get&resource=students";
+const fetch_student_url = "/sgt-fullstack/server/database_connect/server.php?action=get&resource=students";
 export function fetchStudentData() {
     const request = axios.get(fetch_student_url);
     return {
@@ -10,7 +10,7 @@ export function fetchStudentData() {
     };
 }
 
-const add_student_url = "/server/database_connect/server.php?action=post&resource=add-student";
+const add_student_url = "/sgt-fullstack/server/database_connect/server.php?action=post&resource=add-student";
 export function addStudent(values) {
     const request = axios.post(add_student_url, {
         name: values.name,
@@ -23,7 +23,7 @@ export function addStudent(values) {
         payload: request
     };
 }
-const delete_student_url = "/server/database_connect/server.php?action=post&resource=delete-student";
+const delete_student_url = "/sgt-fullstack/server/database_connect/server.php?action=post&resource=delete-student";
 export function deleteStudent(studentId) {
     const request = axios.post(delete_student_url, {
         studentId: studentId
@@ -34,7 +34,7 @@ export function deleteStudent(studentId) {
         payload: request
     };
 }
-const update_student_url = "/server/server.php?action=post&resource=update-student";
+const update_student_url = "/sgt-fullstack/server/server.php?action=post&resource=update-student";
 export function updateStudent(form,studentId) {
     const request = axios.post(update_student_url, {
         name: form.name,
