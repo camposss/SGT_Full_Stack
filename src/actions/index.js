@@ -34,7 +34,7 @@ export function deleteStudent(studentId) {
         payload: request
     };
 }
-const update_student_url = "/sgt-fullstack/server/server.php?action=post&resource=update-student";
+const update_student_url = "/sgt-fullstack/server/database_connect/server.php?action=post&resource=update-student";
 export function updateStudent(form,studentId) {
     const request = axios.post(update_student_url, {
         name: form.name,
